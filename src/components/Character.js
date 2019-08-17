@@ -74,4 +74,7 @@ const Character = props => {
 }
 
 // memo() checkes if the props of the component changes, if they didn't, then don't rerender
-export default React.memo(Character);
+// but more control is provided for when props can change but some of them shouldn't trigger rerender by provider a function as second argument
+export default React.memo(Character, (prevProps, nextProps) => {
+  return nextProps.selectedChar === prevProps.selectedChar;
+});
