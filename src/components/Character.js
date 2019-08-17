@@ -6,14 +6,7 @@ const Character = props => {
   const [loadedCharacter, setLoadedCharacter] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('shouldComponentUpdate');
-  //   return (
-  //     nextProps.selectedChar !== props.selectedChar ||
-  //     nextState.loadedCharacter.id !== state.loadedCharacter.id ||
-  //     nextState.isLoading !== state.isLoading
-  //   );
-  // }
+  console.log('Rendering...');
 
   useEffect(() => {
     fetchData();
@@ -80,4 +73,5 @@ const Character = props => {
   return content;
 }
 
-export default Character;
+// memo() checkes if the props of the component changes, if they didn't, then don't rerender
+export default React.memo(Character);
