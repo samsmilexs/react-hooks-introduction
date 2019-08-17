@@ -17,12 +17,16 @@ const Character = props => {
 
   useEffect(() => {
     fetchData();
+    // useEffect can return a function that runs before every subsequent call
+    return () => {
+      console.log('Cleaning up...');
+    }
   }, [props.selectedChar]);
 
   const fetchData = () => {
     console.log(
       'Sending Http request for new character with id ' +
-        props.selectedChar
+      props.selectedChar
     );
     setIsLoading(true);
     fetch('https://swapi.co/api/people/' + props.selectedChar)
@@ -53,27 +57,27 @@ const Character = props => {
       });
   };
 
-  // componentWillUnmount() {
-  //   console.log('Too soon...');
-  // }
+  useEffect(() => {
+    return () => console.log('Too soon...');
+  }, []);
 
-    let content = <p>Loading Character...</p>;
+  let content = <p>Loading Character...</p>;
 
-    if (!isLoading && loadedCharacter.id) {
-      content = (
-        <Summary
-          name={loadedCharacter.name}
-          gender={loadedCharacter.gender}
-          height={loadedCharacter.height}
-          hairColor={loadedCharacter.colors.hair}
-          skinColor={loadedCharacter.colors.skin}
-          movieCount={loadedCharacter.movieCount}
-        />
-      );
-    } else if (!isLoading && !loadedCharacter.id) {
-      content = <p>Failed to fetch character.</p>;
-    }
-    return content;
+  if (!isLoading && loadedCharacter.id) {
+    content = (
+      <Summary
+        name={loadedCharacter.name}
+        gender={loadedCharacter.gender}
+        height={loadedCharacter.height}
+        hairColor={loadedCharacter.colors.hair}
+        skinColor={loadedCharacter.colors.skin}
+        movieCount={loadedCharacter.movieCount}
+      />
+    );
+  } else if (!isLoading && !loadedCharacter.id) {
+    content = <p>Failed to fetch character.</p>;
+  }
+  return content;
 }
 
 export default Character;
